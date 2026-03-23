@@ -1,0 +1,25 @@
+# .github/workflows/ci.yml
+name: Python CI
+
+# 触发条件：当你向代码库推送代码，或者发起合并请求时
+on: [push, pull_request]
+
+jobs:
+  build-and-test:
+    # 指定一台运行最新的 Ubuntu 系统的干净虚拟机
+    runs-on: ubuntu-latest
+
+    steps:
+    # 步骤1：把你的代码拉取到这台虚拟机里
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # 步骤2：在虚拟机里安装 Python 3.10
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    # 步骤3：运行我们刚才写的测试脚本
+    - name: Run tests
+      run: python -m unittest test_calculator.py
